@@ -350,10 +350,6 @@ class AuditLogMiddleware(BaseHTTPMiddleware):
                 if body_bytes:
                     body_text = body_bytes.decode("utf-8", errors="replace")
                     request_body = body_text[:1000]  # 截断到1000字符
-                # 重新设置请求体，使下游处理能正常读取
-                async def receive():
-                    return {"type": "http.request", "body": body_bytes}
-                request._receive = receive
             except Exception:
                 pass
 
